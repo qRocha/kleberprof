@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homenagem ao Professor Kleber | 3B</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0e17;
+            --primary-blue: #0072ff;
+            --neon-blue: #00f2fe;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f3f4f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Animado */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #111a2e 0%, #0a0e17 100%);
+        }
+
+        /* Música de Fundo Control */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .music-control:hover {
+            background: rgba(0, 114, 255, 0.2);
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            animation: fadeInDown 1.5s ease;
+        }
+
+        .hero h1 span.heart {
+            color: #ff3838;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        .hero h1 span.neon-text {
+            color: #fff;
+            text-shadow: 0 0 10px var(--primary-blue), 0 0 30px var(--neon-blue);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #9ca3af;
+            max-width: 600px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        .btn-cinema {
+            background: linear-gradient(45deg, var(--primary-blue), var(--neon-blue));
+            color: #fff;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+            transition: 0.4s;
+            animation: fadeInUp 2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-cinema:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.7);
+        }
+
+        /* --- QUADRO DIGITAL --- */
+        .quadro-section {
+            padding: 100px 0;
+        }
+
+        .quadro-negro {
+            background: linear-gradient(135deg, #0d1e18 0%, #050d0a 100%);
+            border: 15px solid #3d2314;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 20px 40px rgba(0,0,0,0.5);
+            border-radius: 4px;
+            padding: 40px;
+            min-height: 350px;
+            position: relative;
+        }
+
+        .quadro-negro h2 {
+            font-family: 'Permanent Marker', cursive;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            border-bottom: 2px dashed rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+        }
+
+        .quadro-conteudo {
+            font-family: 'Permanent Marker', cursive;
+            color: rgba(255,255,255,0.85);
+            font-size: 1.6rem;
+            line-height: 1.8;
+            letter-spacing: 1px;
+        }
+
+        .quadro-conteudo p {
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        
+        .quadro-conteudo p:hover {
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+            transform: scale(1.01);
+        }
+
+        /* --- MURAL POLAROID --- */
+        .mural-section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            font-weight: 800;
+        }
+
+        .grid-polaroids {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            justify-items: center;
+        }
+
+        .polaroid {
+            background: #fcfcfc;
+            padding: 15px 15px 30px 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            transform: rotate(var(--r));
+            transition: 0.4s ease;
+            width: 280px;
+            cursor: pointer;
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.08) translateY(-10px);
+            box-shadow: 0 25px 40px rgba(0,0,0,0.6);
+            z-index: 10;
+        }
+
+        .polaroid-img {
+            width: 100%;
+            height: 220px;
+            background: #111a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 3rem;
+            border: 1px solid #eee;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .p1 .polaroid-img { background: linear-gradient(135deg, #152238, #0072ff); }
+        .p2 .polaroid-img { background: linear-gradient(135deg, #0f172a, #38bdf8); }
+        .p3 .polaroid-img { background: linear-gradient(135deg, #1e1b4b, #312e81); }
+
+        .polaroid-caption {
+            font-family: 'Permanent Marker', cursive;
+            color: #333;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* --- CARTÕES INTERATIVOS (GLASSMORPHISM) --- */
+        .mensagens-section {
+            padding: 100px 0;
+        }
+
+        .grid-mensagens {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card-mensagem {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            padding: 30px;
+            border-radius: 20px;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-mensagem::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .card-mensagem:hover::before {
+            transform: translateX(100%);
+        }
+
+        .card-mensagem:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 114, 255, 0.1);
+        }
+
+        .card-mensagem p {
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .card-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-ficticio {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-blue), var(--neon-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .author-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .author-info span {
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+
+        /* --- CONTADOR / ASSINATURAS --- */
+        .mural-interativo {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .contador-box {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+        }
+
+        .contador-box h3 {
+            font-size: 3rem;
+            color: var(--neon-blue);
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        }
+
+        .input-mural {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+
+        .input-mural input {
+            flex: 1;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            padding: 15px 20px;
+            border-radius: 30px;
+            color: #fff;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-mural input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+        }
+
+        /* --- SEÇÃO DO BOTÃO FINAL --- */
+        .surpresa-section {
+            padding: 60px 0 100px 0;
+            text-align: center;
+        }
+
+        /* --- MODAL DA IMAGEM --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: var(--bg-dark);
+            border: 2px solid var(--neon-blue);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            max-width: 90%;
+            width: 540px;
+            transform: scale(0.7);
+            transition: transform 0.4s ease;
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .modal-img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 50px 0;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* --- ANIMAÇÕES --- */
+        .click-heart {
+            position: absolute;
+            color: #ff3838;
+            pointer-events: none;
+            animation: floatUp 0.8s ease-out forwards;
+            font-size: 1.5rem;
+            z-index: 9999;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-80px) scale(0.5); opacity: 0; }
+        }
+
+        @media(max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.1rem; }
+            .quadro-negro { padding: 20px; }
+            .quadro-conteudo { font-size: 1.2rem; }
+            .input-mural { flex-direction: column; }
+            .modal-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="music-control" id="musicBtn">
+        <i class="fas fa-volume-up"></i>
+        <span>Música Lofi</span>
+    </div>
+
+    <audio id="bgMusic" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <section class="hero">
+        <h1>A Sala 3B <span class="heart">❤️</span> <span class="neon-text">Prof. Kleber</span></h1>
+        <p>Mais que um mestre, uma verdadeira lenda que marcou a nossa jornada acadêmica e pessoal.</p>
+        <button class="btn-cinema" onclick="document.getElementById('quadro').scrollIntoView();">Entrar na Sala</button>
+    </section>
+
+    <div class="container">
+        
+        <section class="quadro-section" id="quadro">
+            <div class="quadro-negro">
+                <h2>Aulas de Hoje & Lições pra Vida</h2>
+                <div class="quadro-conteudo">
+                    <p>✏️ “O homem não é apenas professor… é uma lenda da 3B.”</p>
+                    <p>✏️ “As aulas passam rápido demais quando é com o Kleber.”</p>
+                    <p>✏️ “Respeitado e admirado pela sala inteira.”</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mural-section">
+            <h2 class="section-title">Nossas Memórias 📸</h2>
+            <div class="grid-polaroids">
+                <div class="polaroid p1" style="--r: -3deg;">
+                    <div class="polaroid-img"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="polaroid-caption">A melhor explicação!</div>
+                </div>
+                <div class="polaroid p2" style="--r: 4deg;">
+                    <div class="polaroid-img"><i class="fas fa-lightbulb"></i></div>
+                    <div class="polaroid-caption">Aulas inesquecíveis</div>
+                </div>
+                <div class="polaroid p3" style="--r: -2deg;">
+                    <div class="polaroid-img"><i class="fas fa-users"></i></div>
+                    <div class="polaroid-caption">União da 3B</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mensagens-section">
+            <h2 class="section-title">Mensagens no Mural</h2>
+            <div class="grid-mensagens" id="muralMensagens">
+                <div class="card-mensagem">
+                    <p>"Obrigado por não desistir de ninguém e por transformar até a matéria mais difícil em algo leve. O senhor é incrível!"</p>
+                    <div class="card-author">
+                        <div class="avatar-ficticio">AA</div>
+                        <div class="author-info">
+                            <h4>Lilian de Lara</h4>
+                            <span>Mãe do hamster negro</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-mensagem">
+                    <p>"Nenhum outro professor consegue prender a atenção da sala inteira igual ao senhor. Tem o respeito total de todos nós."</p>
+                    <div class="card-author">
+                        <div class="avatar-ficticio">LC</div>
+                        <div class="author-info">
+                            <h4>Ailton </h4>
+                            <span>Pai do Vitor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mural-interativo">
+            <div class="contador-box">
+                <h3 id="heartCount">132</h3>
+                <p>Corações enviados pela turma ao Professor Kleber</p>
+            </div>
+            <div class="input-mural">
+                <input type="text" id="alunoNome" placeholder="Seu nome ou iniciais (Ex: Gabs)" maxlength="15">
+                <input type="text" id="alunoMsg" placeholder="Deixe seu agradecimento rápido..." maxlength="100">
+                <button class="btn-cinema" onclick="adicionarMensagem()">Assinar Mural</button>
+            </div>
+        </section>
+
+        <section class="surpresa-section">
+            <button class="btn-cinema" onclick="abrirModal()">Clique aqui!</button>
+        </section>
+
+    </div>
+
+    <div class="modal-overlay" id="modalSurpresa" onclick="fecharModalExterno(event)">
+        <div class="modal-content">
+            <button class="close-btn" onclick="fecharModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-title">lilian de Lara</div>
+            <img class="modal-img" src="https://m.media-amazon.com/images/I/516E4lqKxCL._UX500_FMwebp_QL85_.jpg" alt="Surpresa">
+        </div>
+    </div>
+
+    <footer>
+        <p>Feito com ❤️, orgulho e nostalgia pela sala do Terceiro B. O senhor é eterno em nossa história.</p>
+    </footer>
+
+    <script>
+        // 1. SISTEMA DE PARTÍCULAS
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
+
+        const particles = [];
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1, dx: (Math.random() - 0.5) * 0.5, dy: (Math.random() - 0.5) * 0.5, alpha: Math.random() * 0.5 + 0.2
+            });
+        }
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                ctx.save(); ctx.globalAlpha = p.alpha; ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = '#00f2fe';
+                ctx.shadowBlur = 10; ctx.shadowColor = '#00f2fe'; ctx.fill(); ctx.restore();
+                p.x += p.dx; p.y += p.dy;
+                if (p.x < 0 || p.x > canvas.width) p.dx *= -1; if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+            });
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+        // 2. CONTROLE DE MÚSICA AMBIENTE
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        let isPlaying = false;
+        musicBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+                bgMusic.play().catch(() => { alert("Interaja com a página primeiro!"); });
+                musicBtn.querySelector('i').className = "fas fa-volume-mute";
+                musicBtn.querySelector('span').innerText = "Mutar Lofi";
+            } else {
+                bgMusic.pause();
+                musicBtn.querySelector('i').className = "fas fa-volume-up";
+                musicBtn.querySelector('span').innerText = "Música Lofi";
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // 3. CONTROLE DO MODAL (ABRIR E FECHAR)
+        function abrirModal() {
+            document.getElementById('modalSurpresa').classList.add('active');
+        }
+
+        function fecharModal() {
+            document.getElementById('modalSurpresa').classList.remove('active');
+        }
+
+        function fecharModalExterno(e) {
+            if (e.target.id === 'modalSurpresa') {
+                fecharModal();
+            }
+        }
+
+        // 4. CLICK HEARTS
+        document.body.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT' || e.target.closest('.modal-content')) return;
+            const heart = document.createElement('i');
+            heart.className = 'fas fa-heart click-heart';
+            heart.style.left = `${e.pageX - 10}px`; heart.style.top = `${e.pageY - 10}px`;
+            const cores = ['#ff3838', '#00f2fe', '#ffffff'];
+            heart.style.color = cores[Math.floor(Math.random() * cores.length)];
+            document.body.appendChild(heart);
+            const counter = document.getElementById('heartCount');
+            counter.innerText = parseInt(counter.innerText) + 1;
+            setTimeout(() => { heart.remove(); }, 800);
+        });
+
+        // 5. ADICIONAR MENSAGENS
+        function adicionarMensagem() {
+            const nomeInput = document.getElementById('alunoNome');
+            const msgInput = document.getElementById('alunoMsg');
+            const mural = document.getElementById('muralMensagens');
+            if (!nomeInput.value.trim() || !msgInput.value.trim()) { alert("Preencha os campos!"); return; }
+            const iniciais = nomeInput.value.trim().substring(0, 2).toUpperCase();
+            const novoCard = document.createElement('div');
+            novoCard.className = 'card-mensagem';
+            novoCard.style.opacity = 0; novoCard.style.transform = 'translateY(20px)'; novoCard.style.transition = '0.5s ease';
+            novoCard.innerHTML = `<p>"${msgInput.value}"</p><div class="card-author"><div class="avatar-ficticio">${iniciais}</div><div class="author-info"><h4>${nomeInput.value}</h4><span>Alunos do 3B</span></div></div>`;
+            mural.insertBefore(novoCard, mural.firstChild);
+            setTimeout(() => { novoCard.style.opacity = 1; novoCard.style.transform = 'translateY(0)'; }, 50);
+            nomeInput.value = ''; msgInput.value = '';
+        }
+    </script>
+</body>
+</html>
